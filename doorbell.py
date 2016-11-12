@@ -11,11 +11,6 @@ print "Loading config..."
 with open('./config/doorbell_config.json') as file:
     config = json.load(file)
 
-# Constants
-sonos_state_file_path = config['sonos_state_file_path']
-doorbell_uri = config['doorbell_uri']
-doorbell_sonos = config['doorbell_sonos']
-
 # Convert times in 00:00:00 format to an integer number of seconds
 def timeToInt( timeStr ):
     accum = 0
@@ -34,16 +29,16 @@ def intToTime( timeInt ):
 # Play
 def play_doorbell():
     # Load the current state
-    print "Loading current state file from {0}".format(sonos_state_file_path)
-    with open(sonos_state_file_path) as file:
+    print "Loading current state file from {0}".format(config['sonos_state_file_path'])
+    with open(config['sonos_state_file_path']) as file:
         sonos_state = json.load(file)
 
     # Get coordinator of group
-    coordinator = SoCo(sonos_state[sonos_state[doorbell_sonos]['group_coordinator']]['ip_address'])
+    coordinator = SoCo(sonos_state[sonos_state[config['doorbell_sonos']]['group_coordinator']]['ip_address'])
     group_players = coordinator.group.members
 
     # Play sounds - the volume or mute status may need adjusting, but if we do it too quick the music gets the volume change
-    coordinator.play_uri(doorbell_uri)
+    coordinator.play_uri(config['doorbell_uri'])
 
     # It the sonos is muted, unmute and set the volume to a reasonable level
     for player in group_players:
@@ -55,7 +50,7 @@ def play_doorbell():
         print "Checking volume level for {0}".format(player.player_name)
         if sonos_state[player.player_name]['volume'] != 10:
             print "Setting volume to 10 for {0}".format(player.player_name)
-            player.volume = 10
+            player.volume = config['doorbell_volume']
 
     # Sleep until sound finishes
     time.sleep(timeToInt(coordinator.get_current_track_info()['duration']))
@@ -108,7 +103,7 @@ def play_doorbell():
 def arp_display(pkt):
     if pkt.haslayer(ARP):
         if pkt[ARP].op == 1: #who-has (request)
-            if pkt[ARP].hwsrc == '44:65:0d:3b:43:9e': # Button MAC Address
+            if pkt[ARP].hwsrc == config['doorbell_mac']:
                 play_doorbell()
             else:
                 print pkt[ARP].hwsrc

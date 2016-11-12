@@ -4,7 +4,7 @@ import soco
 from soco import SoCo
 import json
 import time
-#from scapy.all import *
+from scapy.all import *
 
 # Load configuration
 print "Loading config..."
@@ -108,6 +108,4 @@ def arp_display(pkt):
             else:
                 print pkt[ARP].hwsrc
 
-#print sniff(prn=arp_display, filter="arp", store=0, count=0)
-print "Executing script"
-play_doorbell()
+print sniff(prn=arp_display, filter="arp", store=0, count=0)

@@ -17,7 +17,7 @@ with open(filename) as file:
     config = json.load(file)
 
 # Convert times in 00:00:00 format to an integer number of seconds
-def timeToInt( timeStr ):
+def time_to_int( timeStr ):
     accum = 0
     mult = 1
     for p in reversed(timeStr.split(':')):
@@ -26,7 +26,7 @@ def timeToInt( timeStr ):
     return accum
 
 # Convert integer number of seconds to time in 00:00:00 format
-def intToTime( timeInt ):
+def int_to_time( timeInt ):
     temp_minutes, seconds = divmod(timeInt, 60)
     hours, minutes =  divmod(temp_minutes, 60)
     return "{0:02d}:{1:02d}:{2:02d}".format(hours, minutes, seconds)
@@ -38,6 +38,8 @@ def play_doorbell():
     state_filename = os.path.join(dir, config['sonos_state_file_path'])
     with open(state_filename) as file:
         sonos_state = json.load(file)
+
+    # TODO: Allow definition of multiple sonos players to use
 
     # Get coordinator of group
     coordinator = SoCo(sonos_state[sonos_state[config['doorbell_sonos']]['group_coordinator']]['ip_address'])
@@ -59,7 +61,7 @@ def play_doorbell():
             player.volume = config['doorbell_volume']
 
     # Sleep until sound finishes
-    time.sleep(timeToInt(coordinator.get_current_track_info()['duration']))
+    time.sleep(time_to_int(coordinator.get_current_track_info()['duration']))
 
     # It the sonos is muted, unmute
     for player in group_players:
@@ -88,10 +90,10 @@ def play_doorbell():
         current_track_position_secs = sonos_state[coordinator.player_name]['track']['track_position'] + secs_since_state
 
         if current_track_position_secs > sonos_state[coordinator.player_name]['track']['track_duration']:
-            seek_time = intToTime(current_track_position_secs - sonos_state[coordinator.player_name]['track']['track_duration'])
+            seek_time = int_to_time(current_track_position_secs - sonos_state[coordinator.player_name]['track']['track_duration'])
             playlist_position = int(sonos_state[coordinator.player_name]["track"]['playlist_position'])
         else:
-            seek_time = intToTime(current_track_position_secs)
+            seek_time = int_to_time(current_track_position_secs)
             playlist_position = int(sonos_state[coordinator.player_name]["track"]['playlist_position'])-1
 
         print "Seeking to {0} in playlist position {1}".format(seek_time, playlist_position)
@@ -113,5 +115,7 @@ def arp_display(pkt):
                 play_doorbell()
             else:
                 print pkt[ARP].hwsrc
+
+# TODO: Reload configuration if the modified time has changed
 
 sniff(prn=arp_display, filter="arp", store=0, count=0)

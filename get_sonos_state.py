@@ -73,8 +73,6 @@ while True:
     print >> f, state_json
     f.close()
 
-    break
-
     # Sleep until we need to get the information again
     time.sleep(polling_interval_secs)
 

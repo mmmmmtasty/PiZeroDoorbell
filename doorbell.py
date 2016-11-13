@@ -35,7 +35,8 @@ def intToTime( timeInt ):
 def play_doorbell():
     # Load the current state
     print "Loading current state file from {0}".format(config['sonos_state_file_path'])
-    with open(config['sonos_state_file_path']) as file:
+    state_filename = os.path.join(dir, config['sonos_state_file_path'])
+    with open(state_filename) as file:
         sonos_state = json.load(file)
 
     # Get coordinator of group

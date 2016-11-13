@@ -5,10 +5,15 @@ from soco import SoCo
 import json
 import time
 from scapy.all import *
+import os
+
+# Get relative path for config
+dir = os.path.dirname(__file__)
+filename = os.path.join(dir, '/config/doorbell_config.json')
 
 # Load configuration
 print "Loading config..."
-with open('./config/doorbell_config.json') as file:
+with open(filename) as file:
     config = json.load(file)
 
 # Convert times in 00:00:00 format to an integer number of seconds
@@ -108,4 +113,4 @@ def arp_display(pkt):
             else:
                 print pkt[ARP].hwsrc
 
-print sniff(prn=arp_display, filter="arp", store=0, count=0)
+sniff(prn=arp_display, filter="arp", store=0, count=0)

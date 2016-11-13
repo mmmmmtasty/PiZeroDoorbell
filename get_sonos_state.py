@@ -4,6 +4,7 @@ import soco
 from soco import SoCo
 import time
 import json
+import os
 
 # Convert times in 00:00:00 format to an integer number of seconds
 def timeToInt( timeStr ):
@@ -14,8 +15,12 @@ def timeToInt( timeStr ):
         mult *= 60
     return accum
 
+# Get relative path for config
+dir = os.path.dirname(__file__)
+filename = os.path.join(dir, '/config/doorbell_config.json')
+
 # Load configuration
-with open('./config/doorbell_config.json') as file:
+with open(filename) as file:
     config = json.load(file)
 
 # Constants
@@ -67,9 +72,13 @@ while True:
 
         sonos_state[player.player_name] = player_state
 
+
+    # Get relative path for state
+    sonos_state_filename = os.path.join(dir, sonos_state_file_path)
+
     print "Saving sonos state file"
     state_json = json.dumps(sonos_state, indent=4)
-    f = open(sonos_state_file_path, 'w')
+    f = open(sonos_state_filename, 'w')
     print >> f, state_json
     f.close()
 

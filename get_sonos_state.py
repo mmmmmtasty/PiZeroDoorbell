@@ -16,8 +16,10 @@ def timeToInt( timeStr ):
     return accum
 
 # Get relative path for config
+print os.path.dirname(__file__)
 dir = os.path.dirname(__file__)
-filename = os.path.join(dir, '/config/doorbell_config.json')
+filename = os.path.join(dir, 'config/doorbell_config.json')
+print filename
 
 # Load configuration
 with open(filename) as file:

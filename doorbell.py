@@ -9,7 +9,7 @@ import os
 
 # Get relative path for config
 dir = os.path.dirname(__file__)
-filename = os.path.join(dir, '/config/doorbell_config.json')
+filename = os.path.join(dir, 'config/doorbell_config.json')
 
 # Load configuration
 print "Loading config..."

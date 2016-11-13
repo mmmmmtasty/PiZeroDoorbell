@@ -1,5 +1,5 @@
 {
-    "sonos_state_file_path": "/data/current_sonos_state.json",
+    "sonos_state_file_path": "data/current_sonos_state.json",
     "polling_interval_secs": 30, 
     "doorbell_uri": "http://192.168.55.238/doorbell.mp3", 
     "doorbell_sonos": "Dining Room",

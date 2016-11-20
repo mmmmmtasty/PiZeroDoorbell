@@ -6,29 +6,46 @@ import time
 from scapy.all import *
 import os
 import traceback
-from email.mime.text import MIMEText
 from smtplib import SMTP
 from qhue import Bridge, QhueException, create_new_username
+from email.MIMEMultipart import MIMEMultipart
+from email.MIMEBase import MIMEBase
+from email.Utils import COMMASPACE, formatdate
+from email import Encoders
+from email.mime.text import MIMEText
 
 # Send an email alert
-def send_email_alert(subject, body):
+def send_email_alert(subject, body, photo_path, url):
 
+    print "Attempting to send alert email"
     # Get variables
-    to_addr = config['email']['to']
     from_addr = config['email']['from']
+    to_addr = config['email']['to']
     relay = config['email']['easy_smtp_relay']
     user = config['email']['easy_smtp_user']
     password = config['email']['easy_smtp_pass']
 
-    # Create a text/plain message
-    if body:
-        msg = MIMEText(body)
-    else:
-        msg = MIMEText("Someone has turned up at your door!")
-
-    msg['To'] = to_addr
+    # Create multipart message
+    msg = MIMEMultipart()
     msg['From'] = from_addr
+    msg['To'] = COMMASPACE.join(to_addr)
+    msg['Date'] = formatdate(localtime=True)
     msg['Subject'] = subject
+
+    # Add message body
+    if body:
+        msg.attach(MIMEText(body))
+    else:
+        msg.attach(MIMEText("Someone has turned up at your door!"))
+
+    if photo_path:
+        print "Attaching photo to email from {0}".format(photo_path)
+        part = MIMEBase('application', "octet-stream")
+        part.set_payload(open(photo_path, "rb").read())
+        Encoders.encode_base64(part)
+        part.add_header('Content-Disposition', 'attachment; filename="%s"'
+                       % os.path.basename(photo_path))
+        msg.attach(part)
 
     # Send email
     conn = SMTP(relay, 587)
@@ -40,6 +57,8 @@ def send_email_alert(subject, body):
 
     try:
         conn.sendmail(from_addr, to_addr, msg.as_string())
+    except:
+        print "Could not send email {0}".format(traceback.format_exc())
     finally:
         conn.quit()
 
@@ -99,8 +118,8 @@ def alert_sonos(sonos_state, coordinator, group_players, uri, volume):
             player.mute = False
 
         print "Checking volume level for {0}".format(player.player_name)
-        if sonos_state[player.player_name]['volume'] != 10:
-            print "Setting volume to 10 for {0}".format(player.player_name)
+        if sonos_state[player.player_name]['volume'] != config['sonos']['volume']:
+            print "Setting volume to {0} for {1}".format(config['sonos']['volume'], player.player_name)
             player.volume = config['sonos']['volume']
 
     # Time to resume playing the sonos
@@ -180,13 +199,22 @@ def play_doorbell():
         error = "Exception while controlling hue lights: {0}".format(traceback.format_exc())
         print error
         if config['general']['email_alert']:
-            send_email_alert("Exception thrown alerting hue lights doorbell.py", error)
+            send_email_alert("Exception thrown alerting hue lights doorbell.py", error, None, None)
 
     # Take a photo if we need to
-    # TODO: Take photo and send it in email
+    if config['general']['photo_alert']:
+        print "Taking photo..."
+        photo_path = config['photo']['path']
+        os.system("/usr/bin/raspistill {0} -o {1}".format(config['photo']['args'], photo_path))
 
     # Send email alert if we need to
-    # TODO: Send email alert, include link to photo or streaming video if needed
+    if config['general']['email_alert']:
+        if config['email']['include_photo']:
+            photo_path = config['photo']['path']
+        else:
+            photo_path = None
+        url = None
+        send_email_alert(config['email']['subject'], "Someone has rung your doorbell", photo_path, url)
 
     # Set the state of the sonos back to what it was previously
     if config['general']['sonos_alert']:
@@ -205,9 +233,6 @@ def arp_display(pkt):
             else:
                 print pkt[ARP].hwsrc
 
-
-
-
 # TODO: Reload configuration if the modified time has changed
 
 config_relative_path = 'config/doorbell_config.json'
@@ -220,14 +245,18 @@ except:
     error = "Exception while reading config: {0}".format(traceback.print_exc())
     print error
     if config['general']['email_alert']:
-        send_email_alert("Exception thrown loading config in doorbell.py", error)
+        send_email_alert("Exception thrown loading config in doorbell.py", error, None, None)
+
+# Start livestream if required
 
 while True:
     try:
         sniff(prn=arp_display, filter="arp", store=0, count=0)
+        #play_doorbell()
     except:
         error = "Exception while reading config: {0}".format(traceback.print_exc())
         print error
         if config['general']['email_alert']:
-            send_email_alert("Exception thrown scanning for ARP packets in doorbell.py", error)
+            send_email_alert("Exception thrown scanning for ARP packets in doorbell.py", error, None, None)
         time.sleep(30)
+    #break

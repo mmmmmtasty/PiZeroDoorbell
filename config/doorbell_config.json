@@ -3,7 +3,8 @@
         "amazon_dash_button": true,
         "sonos_alert": true,
         "hue_alert": true,
-        "email_alert": true
+        "email_alert": true,
+        "photo_alert": true
     },
     "hue": {
         "bridge_ip": null,
@@ -28,5 +29,9 @@
         "easy_smtp_relay": "ssrs.reachmail.net",
         "include_photo": false,
         "include_video": false
+    },
+    "photo": {
+        "path": "/home/pi/PiZeroDoorbell/data/photo.jpg",
+        "args": "-w 1024 -h 768 -n -t 100 -q 10 -e jpg -th none"
     }
 }

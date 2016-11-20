@@ -1,8 +1,32 @@
 {
-    "sonos_state_file_path": "data/current_sonos_state.json",
-    "polling_interval_secs": 30, 
-    "doorbell_uri": "http://192.168.55.238/doorbell.mp3", 
-    "doorbell_sonos": "Dining Room",
-    "doorbell_volume": 15,
-    "doorbell_mac": "44:65:0d:3b:43:9e"
+    "general": {
+        "amazon_dash_button": true,
+        "sonos_alert": true,
+        "hue_alert": true,
+        "email_alert": true
+    },
+    "hue": {
+        "bridge_ip": null,
+        "bridge_user": null
+    },
+    "sonos": {
+        "volume": 15,
+        "doorbell_uri": "http://192.168.55.238/doorbell.mp3",
+        "polling_interval_secs": 30,
+        "state_file_path": "data/current_sonos_state.json",
+        "player_name": "Dining Room"
+    },
+    "amazon_dash": {
+        "mac_address": "44:65:0d:3b:43:9e"
+    },
+    "email": {
+        "to": "your_email@your_domain.com",
+        "from": "hello@PiZeroDoorbell.com",
+        "subject": "You have a visitor!",
+        "easy_smtp_user": "your_username",
+        "easy_smtp_pass": "your_password",
+        "easy_smtp_relay": "ssrs.reachmail.net",
+        "include_photo": false,
+        "include_video": false
+    }
 }

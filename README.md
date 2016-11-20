@@ -17,11 +17,12 @@ The main thing I have done is to split the normal process into two parts. I foun
 - Sets volume to customizable value for doorbell then resets to original value
 - Works with radio streams, TV and Sonos queues/playlists
 - Easily customisable through basic configuration file
+- Sends email alerts when visitors arrive
+- Flashes Hue lights
 
 ## Upcoming features
 
-- Notify with  Phillips Hue lights (quick dim/quick burst of light/colour change)
-- SMS when doorbell is triggered with link to a live video stream (requires Raspberry Pi Camera)
+- Attach photo to email or link to a live video stream (requires Raspberry Pi Camera)
 - Triggered by Bluetooth button instead of Amazon Dash
 - Allow multiple Sonos players to be defined for doorbell sound playback
 
@@ -61,7 +62,11 @@ sudo apt-get upgrade
 
 `sudo pip install soco`
 
-#### scapy (Used for working out when Amazon Dash button is pressed)
+#### [Qhue](https://github.com/quentinsf/qhue) (Used for alerting using Hue lights)
+
+`sudo pip install qhue`
+
+#### [scapy](http://www.secdev.org/projects/scapy/) (Used for working out when Amazon Dash button is pressed)
 
 `sudo apt-get install python-scapy tcpdump`
 
@@ -101,9 +106,13 @@ You need to know the MAC address of your dash button (get it from your router) a
 
 `nano ./PiZeroDoorbell/config/doorbell_config.json`
 
-- Edit the 'doorbell_mac' to be the lower-cased MAC address of the Amazon Dash button.
-- Edit the 'doorbell_uri' to be the URL to retrieve the doorbell mp3 file from
-- Edit the 'doorbell_volume' to be something sensible for the size of your house/location of your Sonos players
+- Edit the ['amazon_dash']['mac_address'] to be the lower-cased MAC address of the Amazon Dash button.
+- Edit the ['sonos']['doorbell_uri'] to be the URL to retrieve the doorbell mp3 file from
+- Edit the ['sonos']['volume'] to be something sensible for the size of your house/location of your Sonos players
+- If you require email, update the email settings with your easy-smtp.com login details (free to create an account)
+- If you want to use your Hue lights for alerting, run:
+
+`sudo python ./PiZeroDoorbell/hue_setup.py`
 
 ### Test to make sure both of the scripts involved run properly
 

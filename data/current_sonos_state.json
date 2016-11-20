@@ -1,0 +1,74 @@
+{
+    "Living Room": {
+        "mute": false, 
+        "tv": false, 
+        "time": 1479556091, 
+        "group_coordinator": "Living Room", 
+        "volume": 2, 
+        "queue_size": 46, 
+        "play_state": "STOPPED", 
+        "radio": false, 
+        "track": {
+            "playlist_position": "1", 
+            "track_duration": 3, 
+            "track_position": 0
+        }, 
+        "media_uri": "http://192.168.55.238/doorbell.mp3", 
+        "ip_address": "192.168.55.199", 
+        "media_uri_metadata": "<DIDL-Lite xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:upnp=\"urn:schemas-upnp-org:metadata-1-0/upnp/\" xmlns:r=\"urn:schemas-rinconnetworks-com:metadata-1-0/\" xmlns=\"urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/\"><item id=\"-1\" parentID=\"-1\" restricted=\"true\"><res protocolInfo=\"http-get:*:audio/mpeg:*\" duration=\"0:00:03\">http://192.168.55.238/doorbell.mp3</res><r:streamContent></r:streamContent><dc:title>doorbell.mp3</dc:title><upnp:class>object.item.audioItem.musicTrack</upnp:class></item></DIDL-Lite>"
+    }, 
+    "Kitchen": {
+        "mute": false, 
+        "tv": false, 
+        "time": 1479556090, 
+        "group_coordinator": "Kitchen", 
+        "volume": 8, 
+        "queue_size": 15, 
+        "play_state": "PLAYING", 
+        "radio": true, 
+        "track": {
+            "playlist_position": "1", 
+            "track_duration": 0, 
+            "track_position": 8
+        }, 
+        "media_uri": "x-rincon-mp3radio://swr-mp3-m-swr1bw.akacast.akamaistream.net/7/245/137133/v1/gnl.akacast.akamaistream.net/swr-mp3-m-swr1bw", 
+        "ip_address": "192.168.55.150", 
+        "media_uri_metadata": "<DIDL-Lite xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:upnp=\"urn:schemas-upnp-org:metadata-1-0/upnp/\" xmlns:r=\"urn:schemas-rinconnetworks-com:metadata-1-0/\" xmlns=\"urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/\"><item id=\"-1\" parentID=\"-1\" restricted=\"true\"><res protocolInfo=\"x-rincon-mp3radio:*:*:*\">x-rincon-mp3radio://swr-mp3-m-swr1bw.akacast.akamaistream.net/7/245/137133/v1/gnl.akacast.akamaistream.net/swr-mp3-m-swr1bw</res><r:streamContent>SWR 1 - Aktuell um 12  Moderation Jochen Klink</r:streamContent><dc:title>swr-mp3-m-swr1bw</dc:title><upnp:class>object.item</upnp:class></item></DIDL-Lite>"
+    }, 
+    "Dining Room": {
+        "mute": false, 
+        "tv": false, 
+        "time": 1479556090, 
+        "group_coordinator": "Kitchen", 
+        "volume": 3, 
+        "queue_size": 0, 
+        "play_state": "PLAYING", 
+        "radio": false, 
+        "track": {
+            "playlist_position": "1", 
+            "track_duration": "NOT_IMPLEMENTED", 
+            "track_position": "NOT_IMPLEMENTED"
+        }, 
+        "media_uri": "x-rincon:RINCON_B8E9378F19AC01400", 
+        "ip_address": "192.168.55.102", 
+        "media_uri_metadata": "NOT_IMPLEMENTED"
+    }, 
+    "Bedroom": {
+        "mute": false, 
+        "tv": false, 
+        "time": 1479556090, 
+        "group_coordinator": "Bedroom", 
+        "volume": 2, 
+        "queue_size": 10, 
+        "play_state": "STOPPED", 
+        "radio": true, 
+        "track": {
+            "playlist_position": "1", 
+            "track_duration": 0, 
+            "track_position": 0
+        }, 
+        "media_uri": "x-rincon-mp3radio://swr-mp3-m-swr1bw.akacast.akamaistream.net/7/245/137133/v1/gnl.akacast.akamaistream.net/swr-mp3-m-swr1bw", 
+        "ip_address": "192.168.55.122", 
+        "media_uri_metadata": "<DIDL-Lite xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:upnp=\"urn:schemas-upnp-org:metadata-1-0/upnp/\" xmlns:r=\"urn:schemas-rinconnetworks-com:metadata-1-0/\" xmlns=\"urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/\"><item id=\"-1\" parentID=\"-1\" restricted=\"true\"><res protocolInfo=\"x-rincon-mp3radio:*:*:*\">x-rincon-mp3radio://swr-mp3-m-swr1bw.akacast.akamaistream.net/7/245/137133/v1/gnl.akacast.akamaistream.net/swr-mp3-m-swr1bw</res><r:streamContent></r:streamContent><dc:title>swr-mp3-m-swr1bw</dc:title><upnp:class>object.item</upnp:class></item></DIDL-Lite>"
+    }
+}

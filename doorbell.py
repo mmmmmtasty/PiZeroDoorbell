@@ -3,7 +3,7 @@ __author__ = 'mmmmmtasty'
 from soco import SoCo
 import json
 import time
-#from scapy.all import *
+from scapy.all import *
 import os
 import traceback
 from email.mime.text import MIMEText

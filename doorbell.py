@@ -222,14 +222,12 @@ except:
     if config['general']['email_alert']:
         send_email_alert("Exception thrown loading config in doorbell.py", error)
 
-#while True:
-#    try:
-#        sniff(prn=arp_display, filter="arp", store=0, count=0)
-#    except:
-#        error = "Exception while reading config: {0}".format(traceback.print_exc())
-#        print error
-#        if config['general']['email_alert']:
-#            send_email_alert("Exception thrown scanning for ARP packets in doorbell.py", error)
-#        time.sleep(30)
-
-play_doorbell()
+while True:
+    try:
+        sniff(prn=arp_display, filter="arp", store=0, count=0)
+    except:
+        error = "Exception while reading config: {0}".format(traceback.print_exc())
+        print error
+        if config['general']['email_alert']:
+            send_email_alert("Exception thrown scanning for ARP packets in doorbell.py", error)
+        time.sleep(30)

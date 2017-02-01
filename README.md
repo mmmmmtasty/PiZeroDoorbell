@@ -1,5 +1,7 @@
 # PiZeroDoorbell
 
+# This project is not great...I'll leave it up for anyone that is interested and it was a good learning experienc but it was not reliable enough. Do not use Dash button - consider flic.io. I have migrated to using Home Assistant + Appdaemon for a full home automation solution. Check out my HomeAssistantConfig project if you are interested.
+
 ## Summary
 
 This is a project designed to run on a Raspberry Pi and use an Amazon Dash button as a doorbell. The doorbell noise plays through a Sonos and any other players in it's current group and then restarts the previously playing music.
